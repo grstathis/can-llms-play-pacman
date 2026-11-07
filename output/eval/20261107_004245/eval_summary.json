@@ -1,0 +1,493 @@
+{
+  "model": "moondream2 (raw)",
+  "games": 5,
+  "date": "2026-11-07T00:48:10",
+  "best_score": 300,
+  "worst_score": 170,
+  "avg_score": 268,
+  "median_score": 290,
+  "avg_turns": 14,
+  "avg_lives_lost": 1,
+  "results": [
+    {
+      "end_reason": "life_lost",
+      "player": "vikhyatk/moondream2 (raw)",
+      "moves_played": 22,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 300,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 3,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 130
+        },
+        {
+          "turn": 4,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 5,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 220
+        },
+        {
+          "turn": 6,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 250
+        },
+        {
+          "turn": 7,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 250
+        },
+        {
+          "turn": 8,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 9,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 10,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 11,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 12,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 13,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 14,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 15,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 16,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 17,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 18,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 19,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 20,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 21,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 22,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        }
+      ],
+      "run_dir": "20261107_004252"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "vikhyatk/moondream2 (raw)",
+      "moves_played": 10,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 290,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 100
+        },
+        {
+          "turn": 3,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 140
+        },
+        {
+          "turn": 4,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 5,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 220
+        },
+        {
+          "turn": 6,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 270
+        },
+        {
+          "turn": 7,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 8,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 9,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 10,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        }
+      ],
+      "run_dir": "20261107_004427"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "vikhyatk/moondream2 (raw)",
+      "moves_played": 11,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 290,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 3,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 140
+        },
+        {
+          "turn": 4,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 5,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 220
+        },
+        {
+          "turn": 6,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 260
+        },
+        {
+          "turn": 7,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 8,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 9,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 10,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 11,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        }
+      ],
+      "run_dir": "20261107_004518"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "vikhyatk/moondream2 (raw)",
+      "moves_played": 11,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 290,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 3,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 140
+        },
+        {
+          "turn": 4,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 5,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 220
+        },
+        {
+          "turn": 6,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 260
+        },
+        {
+          "turn": 7,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 8,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 9,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 10,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 11,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 290
+        }
+      ],
+      "run_dir": "20261107_004613"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "vikhyatk/moondream2 (raw)",
+      "moves_played": 16,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 170,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 3,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 140
+        },
+        {
+          "turn": 4,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 5,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 6,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 7,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 8,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 9,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 10,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 11,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 12,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 13,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 14,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 15,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 16,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        }
+      ],
+      "run_dir": "20261107_004707"
+    }
+  ]
+}

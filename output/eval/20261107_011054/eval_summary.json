@@ -1,0 +1,943 @@
+{
+  "model": "Qwen2.5-VL-3B-Instruct-4bit (raw)",
+  "games": 5,
+  "date": "2026-11-07T01:23:54",
+  "best_score": 640,
+  "worst_score": 240,
+  "avg_score": 442,
+  "median_score": 510,
+  "avg_turns": 29,
+  "avg_lives_lost": 1,
+  "results": [
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit (raw)",
+      "moves_played": 25,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 240,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 60
+        },
+        {
+          "turn": 3,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 4,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 5,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 6,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 100
+        },
+        {
+          "turn": 7,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 100
+        },
+        {
+          "turn": 8,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 140
+        },
+        {
+          "turn": 9,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 10,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 11,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 12,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 13,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 14,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 15,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 16,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 17,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 18,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 19,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 20,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 21,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 22,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 23,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 24,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 25,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 240
+        }
+      ],
+      "run_dir": "20261107_011101"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit (raw)",
+      "moves_played": 38,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 510,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 60
+        },
+        {
+          "turn": 3,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 4,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 130
+        },
+        {
+          "turn": 5,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 6,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 7,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 8,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 9,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 10,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 11,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 12,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 13,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 260
+        },
+        {
+          "turn": 14,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 320
+        },
+        {
+          "turn": 15,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 320
+        },
+        {
+          "turn": 16,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 320
+        },
+        {
+          "turn": 17,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 340
+        },
+        {
+          "turn": 18,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 400
+        },
+        {
+          "turn": 19,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 400
+        },
+        {
+          "turn": 20,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 400
+        },
+        {
+          "turn": 21,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 400
+        },
+        {
+          "turn": 22,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 400
+        },
+        {
+          "turn": 23,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 400
+        },
+        {
+          "turn": 24,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 400
+        },
+        {
+          "turn": 25,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 450
+        },
+        {
+          "turn": 26,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 480
+        },
+        {
+          "turn": 27,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 480
+        },
+        {
+          "turn": 28,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 480
+        },
+        {
+          "turn": 29,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 480
+        },
+        {
+          "turn": 30,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 480
+        },
+        {
+          "turn": 31,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 480
+        },
+        {
+          "turn": 32,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 500
+        },
+        {
+          "turn": 33,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 510
+        },
+        {
+          "turn": 34,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 510
+        },
+        {
+          "turn": 35,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 510
+        },
+        {
+          "turn": 36,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 510
+        },
+        {
+          "turn": 37,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 510
+        },
+        {
+          "turn": 38,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 510
+        }
+      ],
+      "run_dir": "20261107_011317"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit (raw)",
+      "moves_played": 40,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 640,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 60
+        },
+        {
+          "turn": 3,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 4,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 130
+        },
+        {
+          "turn": 5,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 130
+        },
+        {
+          "turn": 6,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 130
+        },
+        {
+          "turn": 7,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 130
+        },
+        {
+          "turn": 8,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 9,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 10,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 290
+        },
+        {
+          "turn": 11,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 350
+        },
+        {
+          "turn": 12,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 410
+        },
+        {
+          "turn": 13,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 14,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 510
+        },
+        {
+          "turn": 15,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 16,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 17,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 18,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 19,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 20,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 21,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 22,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 23,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 24,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 25,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 26,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 27,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 28,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 29,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 580
+        },
+        {
+          "turn": 30,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 580
+        },
+        {
+          "turn": 31,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 580
+        },
+        {
+          "turn": 32,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 600
+        },
+        {
+          "turn": 33,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 640
+        },
+        {
+          "turn": 34,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 640
+        },
+        {
+          "turn": 35,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 640
+        },
+        {
+          "turn": 36,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 640
+        },
+        {
+          "turn": 37,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 640
+        },
+        {
+          "turn": 38,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 640
+        },
+        {
+          "turn": 39,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 640
+        },
+        {
+          "turn": 40,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 640
+        }
+      ],
+      "run_dir": "20261107_011640"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit (raw)",
+      "moves_played": 18,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 240,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 3,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 100
+        },
+        {
+          "turn": 4,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 100
+        },
+        {
+          "turn": 5,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 120
+        },
+        {
+          "turn": 6,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 120
+        },
+        {
+          "turn": 7,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 120
+        },
+        {
+          "turn": 8,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 120
+        },
+        {
+          "turn": 9,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 120
+        },
+        {
+          "turn": 10,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 140
+        },
+        {
+          "turn": 11,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 12,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 13,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 14,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 15,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 16,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 17,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 18,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 240
+        }
+      ],
+      "run_dir": "20261107_012005"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit (raw)",
+      "moves_played": 24,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 580,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 3,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 140
+        },
+        {
+          "turn": 4,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 5,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 220
+        },
+        {
+          "turn": 6,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 260
+        },
+        {
+          "turn": 7,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 8,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 390
+        },
+        {
+          "turn": 9,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 430
+        },
+        {
+          "turn": 10,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 430
+        },
+        {
+          "turn": 11,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 480
+        },
+        {
+          "turn": 12,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 540
+        },
+        {
+          "turn": 13,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 570
+        },
+        {
+          "turn": 14,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 570
+        },
+        {
+          "turn": 15,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 570
+        },
+        {
+          "turn": 16,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 570
+        },
+        {
+          "turn": 17,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 570
+        },
+        {
+          "turn": 18,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 570
+        },
+        {
+          "turn": 19,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 580
+        },
+        {
+          "turn": 20,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 580
+        },
+        {
+          "turn": 21,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 580
+        },
+        {
+          "turn": 22,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 580
+        },
+        {
+          "turn": 23,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 580
+        },
+        {
+          "turn": 24,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 580
+        }
+      ],
+      "run_dir": "20261107_012145"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+RAW_PROMPT v1 (verbose, needed ~200 tokens)
+=============================================
+
+RAW_PROMPT = """\
+Analyze this video game Pac-Man screenshot step by step:
+1. Where is the yellow character (Pac-Man)?
+2. Ghosts are the small red, pink, orange, or cyan blob-shaped characters with eyes. Are there any ghosts in the image?
+3. Describe what is directly adjacent to Pac-Man:
+ - UP: magenta wall or black corridor or grey/white pellets or ghosts?
+ - DOWN: magenta wall or black corridor or grey/white pellets or ghosts?
+ - LEFT: magenta wall or black corridor or grey/white pellets or ghosts?
+ - RIGHT: magenta wall or black corridor or grey/white pellets or ghosts?
+
+  If it is wall or ghosts it is BLOCKED.
+
+Rules : Aim for the open direction with pellets and avoid blocked paths.
+
+Pick ONE direction as pacman top view controller : up, down, left, or right.
+Exception: If you eat a big grey/white pellets then ghosts will turn White or Dark Blue  — chase and eat them for big bonus points!
+There is always an open direction, None is not an acceptable answer.
+End with: MOVE: <direction>
+"""
+
+
+RAW_PROMPT v2 (tight, fits 50 tokens)
+======================================
+
+RAW_PROMPT = """\
+You control Pac-Man (yellow) in this screenshot.
+Walls are magenta. Pellets are white/grey dots. Ghosts are red/pink/orange/cyan blobs with eyes.
+
+For each direction (UP, DOWN, LEFT, RIGHT): wall=BLOCKED, corridor/pellets=OPEN.
+Avoid ghosts. Go toward pellets. If ghosts are blue/white, chase them.
+
+MOVE: <up|down|left|right>
+"""
+
+
+RAW_PROMPT v3 (minimal, fill-in-the-blank — Nov 6 2026)
+========================================================
+Caused single-token spam on Qwen3-VL 4B ("left") and terse one-liner
+on Qwen2.5-VL 7B ("down"). Both models short-circuit the MOVE: <direction>
+template without reasoning. Confirmed via mlx-vlm CLI — not a code bug.
+
+RAW_PROMPT = """\
+This is a Pac-Man game screenshot. Pac-Man is yellow. Walls are magenta and they block Pac-man. \
+Pellets are white/grey dots. Ghosts are colored blobs with eyes.
+Which direction (left, right, up, down) has pellets and no ghosts?
+MOVE: <direction>
+"""
+
+
+RAW_PROMPT v4 (reason-first — Nov 7 2026)
+==========================================
+Fixes Qwen3-VL and Qwen2.5-VL 7B by asking "say why" before the MOVE.
+Forces brief chain-of-thought (15-27 words) without the fill-in-the-blank
+trigger. Compact enough for 100 max_tokens. Works across all tested models.
+However, Qwen3-VL still scored only 144 avg in eval (same 180 plateau) —
+not enough reasoning to change directions. Superseded by v5.
+
+RAW_PROMPT = """\
+You control the yellow Pac-Man in this screenshot. Walls are magenta. \
+Pellets are white dots. Ghosts are colored blobs with eyes.
+Which direction should Pac-Man move to eat pellets while avoiding ghosts? \
+Say why in one sentence, then: MOVE: direction
+"""
+
+
+RAW_PROMPT v5 (structured chain-of-thought — Nov 7 2026)
+=========================================================
+Forces models to report game state (position, ghosts, pellets, danger)
+before picking a direction. Concise structured output (13-25 words typical).
+Fixes Qwen3-VL 4B (was 97% "left" spam) and Qwen2.5-VL 7B (was 72% "down" spam).
+Both now vary directions across screenshots. "never none" prevents cop-out answers.
+Parser updated to handle GO: field with top/bottom → up/down mapping.
+max_tokens bumped to 150 for models that bloat (Pixtral).
+
+RAW_PROMPT = """\
+Pac-Man game. Yellow=Pac-Man, magenta=walls, white dots=pellets, colored blobs=ghosts.
+Answer briefly:
+PACMAN: <position, e.g. top-left, center>
+GHOSTS: <positions>
+PELLETS: <which directions have pellets>
+DANGER: <which directions have ghosts>
+GO: <up, down, left, or right — pick one, never none>
+"""

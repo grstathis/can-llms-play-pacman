@@ -1,0 +1,643 @@
+{
+  "model": "gemma-3-4b-it-4bit (raw v5)",
+  "games": 5,
+  "date": "2026-11-07T21:21:45",
+  "best_score": 280,
+  "worst_score": 230,
+  "avg_score": 248,
+  "median_score": 250,
+  "avg_turns": 19,
+  "avg_lives_lost": 1,
+  "results": [
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/gemma-3-4b-it-4bit (raw)",
+      "moves_played": 21,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 230,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 3,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 130
+        },
+        {
+          "turn": 4,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 5,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 6,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 7,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 8,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 9,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 10,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 11,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 12,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 13,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 14,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 15,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 16,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 17,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 18,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 19,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 20,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 21,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 230
+        }
+      ],
+      "run_dir": "20261107_210458"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/gemma-3-4b-it-4bit (raw)",
+      "moves_played": 15,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 250,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 3,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 140
+        },
+        {
+          "turn": 4,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 5,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 6,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 7,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 8,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 9,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 10,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 11,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 12,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 250
+        },
+        {
+          "turn": 13,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 250
+        },
+        {
+          "turn": 14,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 250
+        },
+        {
+          "turn": 15,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 250
+        }
+      ],
+      "run_dir": "20261107_210845"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/gemma-3-4b-it-4bit (raw)",
+      "moves_played": 21,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 250,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 3,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 140
+        },
+        {
+          "turn": 4,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 5,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 6,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 7,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 8,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 9,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 10,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 11,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 12,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 13,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 14,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 15,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 16,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 17,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 18,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 250
+        },
+        {
+          "turn": 19,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 250
+        },
+        {
+          "turn": 20,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 250
+        },
+        {
+          "turn": 21,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 250
+        }
+      ],
+      "run_dir": "20261107_211133"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/gemma-3-4b-it-4bit (raw)",
+      "moves_played": 21,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 280,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 3,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 140
+        },
+        {
+          "turn": 4,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 5,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 6,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 7,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 8,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 9,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 10,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 11,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 12,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 13,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 14,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 15,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 16,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 240
+        },
+        {
+          "turn": 17,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 280
+        },
+        {
+          "turn": 18,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 280
+        },
+        {
+          "turn": 19,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 280
+        },
+        {
+          "turn": 20,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 280
+        },
+        {
+          "turn": 21,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 280
+        }
+      ],
+      "run_dir": "20261107_211512"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/gemma-3-4b-it-4bit (raw)",
+      "moves_played": 17,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 230,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 3,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 80
+        },
+        {
+          "turn": 4,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 5,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 100
+        },
+        {
+          "turn": 6,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 120
+        },
+        {
+          "turn": 7,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 120
+        },
+        {
+          "turn": 8,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 120
+        },
+        {
+          "turn": 9,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 10,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 11,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 180
+        },
+        {
+          "turn": 12,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 220
+        },
+        {
+          "turn": 13,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 14,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 15,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 16,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 17,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 230
+        }
+      ],
+      "run_dir": "20261107_211853"
+    }
+  ]
+}

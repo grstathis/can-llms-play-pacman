@@ -1,0 +1,403 @@
+{
+  "model": "pixtral-12b-4bit (raw v3 recheck)",
+  "games": 2,
+  "date": "2026-11-08T00:13:44",
+  "best_score": 460,
+  "worst_score": 370,
+  "avg_score": 415,
+  "median_score": 415.0,
+  "avg_turns": 30.5,
+  "avg_lives_lost": 1,
+  "results": [
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/pixtral-12b-4bit (raw)",
+      "moves_played": 38,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 460,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 60
+        },
+        {
+          "turn": 2,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 100
+        },
+        {
+          "turn": 3,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 130
+        },
+        {
+          "turn": 4,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 130
+        },
+        {
+          "turn": 5,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 6,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 7,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 250
+        },
+        {
+          "turn": 8,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 300
+        },
+        {
+          "turn": 9,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 330
+        },
+        {
+          "turn": 10,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 330
+        },
+        {
+          "turn": 11,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 420
+        },
+        {
+          "turn": 12,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 420
+        },
+        {
+          "turn": 13,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 420
+        },
+        {
+          "turn": 14,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 420
+        },
+        {
+          "turn": 15,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 450
+        },
+        {
+          "turn": 16,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 450
+        },
+        {
+          "turn": 17,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 450
+        },
+        {
+          "turn": 18,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 450
+        },
+        {
+          "turn": 19,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 450
+        },
+        {
+          "turn": 20,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 450
+        },
+        {
+          "turn": 21,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 22,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 23,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 24,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 25,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 26,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 27,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 28,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 29,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 30,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 31,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 32,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 33,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 34,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 35,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 36,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 37,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 460
+        },
+        {
+          "turn": 38,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 460
+        }
+      ],
+      "run_dir": "20261107_235015"
+    },
+    {
+      "end_reason": "life_lost",
+      "player": "mlx-community/pixtral-12b-4bit (raw)",
+      "moves_played": 23,
+      "start_lives": 2,
+      "final_lives": 1,
+      "lives_lost": 1,
+      "final_score": 370,
+      "moves": [
+        {
+          "turn": 1,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 50
+        },
+        {
+          "turn": 2,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 90
+        },
+        {
+          "turn": 3,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 140
+        },
+        {
+          "turn": 4,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 160
+        },
+        {
+          "turn": 5,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 170
+        },
+        {
+          "turn": 6,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 210
+        },
+        {
+          "turn": 7,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 230
+        },
+        {
+          "turn": 8,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 270
+        },
+        {
+          "turn": 9,
+          "direction": "right",
+          "frames": 45,
+          "score_before": 270
+        },
+        {
+          "turn": 10,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 270
+        },
+        {
+          "turn": 11,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 280
+        },
+        {
+          "turn": 12,
+          "direction": "up",
+          "frames": 45,
+          "score_before": 320
+        },
+        {
+          "turn": 13,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 360
+        },
+        {
+          "turn": 14,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 370
+        },
+        {
+          "turn": 15,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 370
+        },
+        {
+          "turn": 16,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 370
+        },
+        {
+          "turn": 17,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 370
+        },
+        {
+          "turn": 18,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 370
+        },
+        {
+          "turn": 19,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 370
+        },
+        {
+          "turn": 20,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 370
+        },
+        {
+          "turn": 21,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 370
+        },
+        {
+          "turn": 22,
+          "direction": "left",
+          "frames": 45,
+          "score_before": 370
+        },
+        {
+          "turn": 23,
+          "direction": "down",
+          "frames": 45,
+          "score_before": 370
+        }
+      ],
+      "run_dir": "20261108_000437"
+    }
+  ]
+}
