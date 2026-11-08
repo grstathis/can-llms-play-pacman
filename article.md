@@ -1,14 +1,14 @@
 # Can Vision LLMs Play Ms. Pac-Man?
 
-*We tested 8 AI models on a real SNES emulator. Most of them just picked one direction and died.*
+*What we learned about AI spatial reasoning by letting them play a Pac-Man game.*
 
 [IMAGE: output/screen.png — A raw Ms. Pac-Man screenshot from the SNES emulator. This is exactly what every AI model sees each turn.]
 
 Here's the experiment: take a Ms. Pac-Man game running on a real SNES emulator, freeze it between moves, and let a vision AI look at the screenshot and pick a direction. No special training, no game-specific fine-tuning — just a model, a screenshot, and a question: *which way should Pac-Man go?*
 
-We tested 7 open-source vision language models (VLMs) running locally on a MacBook, plus Claude Opus as the frontier comparison. Vision language models are AI systems that can take both images and text as input — you show them a picture and ask a question about it. The models ranged from 1.9 billion to 12 billion parameters, all running on-device with no cloud APIs.
+We tested 7 open-source vision language models (VLMs) running locally on an M1 MacBook Pro — no cloud APIs, no GPU rental. Vision language models are AI systems that can take both images and text as input — you show them a picture and ask a question about it. The models ranged from 1.9 billion to 12 billion parameters, all running on-device. We later added Claude Opus 4.6 as a remote frontier comparison.
 
-Only 2 of 7 local models could consistently beat random moves. Most fixated on a single direction — "right" every turn, or "down" every turn — regardless of what was on screen. A random number generator was a better Pac-Man player than five of seven AI models.
+Only 2 of 7 local models scored above the random baseline on average. Most fixated on a single direction — "right" every turn, or "down" every turn — regardless of what was on screen. A random number generator was a better Pac-Man player than five of seven AI models.
 
 But the more interesting story is *why* they failed, how we fixed some of them with nothing but prompt changes, and what happened when a much larger frontier model entered the arena. Along the way, we found some genuinely surprising things about how these models work — and don't work — when they need to reason about space.
 
@@ -44,15 +44,15 @@ On the Python side: wait for a screenshot, load it into the vision model, parse 
 
 The communication between all the pieces is deliberately low-tech: the Lua script writes a PNG file, the Python script reads it. The Python script writes a text file with a direction, the Lua script reads it next frame. No sockets, no RPC, no message queues.
 
-All local models run on Apple Silicon via [mlx-vlm](https://github.com/Blaizzy/mlx-vlm), a framework for running vision language models on the Mac's GPU. Every model is 4-bit quantized — compressed to fit in 2–4 GB of memory. No cloud APIs, no GPU rental — the entire benchmark runs on a 16GB MacBook.
+All local models run on an M1 MacBook Pro (16GB) via [mlx-vlm](https://github.com/Blaizzy/mlx-vlm), a framework for running vision language models on Apple Silicon GPUs. Every model is 4-bit quantized — compressed to fit in 2–4 GB of memory. We capped output at 150 tokens per move to keep inference fast; most models use far less, but verbose ones like Pixtral can hit the limit. No cloud APIs, no GPU rental.
 
-The models we tested: **Qwen2.5-VL** (3B and 7B), **Pixtral 12B**, **Qwen3-VL 4B**, **SmolVLM** (2B), **Moondream2** (1.9B), **Gemma 3 4B**, and **LLaVA 1.6 7B** — all 4-bit quantized versions from the mlx-community on HuggingFace. And later, **Claude Opus 4.6** as the frontier comparison, played through the same pipeline via Claude Code.
+The models we tested: **Qwen2.5-VL** (3B and 7B), **Pixtral 12B**, **Qwen3-VL 4B**, **SmolVLM** (2B), **Moondream2** (1.9B), **Gemma 3 4B**, and **LLaVA 1.6 7B** — all 4-bit quantized versions from the mlx-community on HuggingFace. And later, **Claude Opus 4.6** as the frontier comparison.
+
+**Methodology:** Every run starts from the same save state, so all models face identical initial conditions. A run ends on first life lost — so scores represent performance up to first death, not a full playthrough. Each model played 5 runs per prompt version. If a model outputs an invalid direction, the parser falls back to the last valid direction. If a move goes into a wall, the game plays it anyway — Pac-Man just doesn't move, and the score stays the same. All scores reported are averages; individual run scores vary widely (the full dataset includes min/max).
 
 A quick note on the game itself: Ms. Pac-Man for SNES is harder than it might look. The maze is larger than the screen — the view scrolls as Pac-Man moves — so the AI never sees the full layout at once. Unlike the original Pac-Man, which has one fixed maze, Ms. Pac-Man rotates between different maze layouts. The ghosts are fast and unpredictable. And everything is rendered in a very specific SNES art style: magenta walls, black corridors, white pellets, and colored ghost sprites at a native 256×224 resolution. This is what the models have to work with — no high-res renders, no clean vector graphics, just raw 16-bit pixel art.
 
 [VIDEO: A short clip of the AI playing Ms. Pac-Man, showing the freeze-move-freeze cycle in action. Each pause is the model thinking.]
-
-[IMAGE: ps_annotated.png — Annotated screenshot: Pac-Man (yellow), ghosts (colored blobs with eyes), pellets (white dots), walls (magenta).]
 
 ---
 
@@ -68,7 +68,7 @@ Which direction (left, right, up, down) has pellets and no ghosts?
 MOVE: <direction>
 ```
 
-Two models actually played the game. **Qwen2.5-VL 3B** — a 3-billion-parameter model from Alibaba's Qwen team — averaged 411 points across 10 games, varying its directions based on what it saw on screen. **Pixtral 12B** — Mistral's vision model — scored even higher at 535 points averaged over 6 games. Both showed genuine direction diversity: their most-used direction accounted for only about 35% of moves, meaning they were actually responding to different game states with different decisions.
+Two models actually played the game. **Qwen2.5-VL 3B** — a 3-billion-parameter model from Alibaba's Qwen team — averaged 411 points across 5 runs, varying its directions based on what it saw on screen. **Pixtral 12B** — Mistral's vision model — scored even higher at 535 points. Both showed genuine direction diversity: their most-used direction accounted for only about 35% of moves, meaning they were actually responding to different game states with different decisions.
 
 The other five didn't play at all.
 
@@ -80,46 +80,48 @@ SmolVLM move sequence: r r r r r r r r r r r r r r r r r r r r r r r r r r r r
 
 **Qwen2.5-VL 7B** spammed "down" on 72% of turns. **Moondream2** spammed "up" on 86%. **Qwen3-VL 4B** spammed "left" on an astounding 97% of turns. And **LLaVA 1.6 7B** couldn't produce a single valid move in most games, averaging just 28 points.
 
-For context, we ran a **random baseline**: pick a direction uniformly at random each turn, no AI at all. It averaged **310 points** across 9 games. Five of seven vision AI models scored below that — they were worse than a coin flip.
+For context, we ran a **random baseline**: pick a direction uniformly at random each turn, no AI at all. It averaged **310 points**. Five of seven vision AI models scored below that — worse than picking directions at random.
 
-| Model | Size | Avg Score | Top Direction | % Spam | vs Random |
-|-------|------|-----------|--------------|--------|-----------|
-| **Pixtral 12B** | 12B | **535** | down | 36% | +73% |
-| **Qwen2.5-VL 3B** | 3B | **411** | right | 34% | +33% |
-| Random Baseline | — | **310** | — | — | — |
-| Moondream2 | 1.9B | 268 | up | 86% | -14% |
-| Qwen2.5-VL 7B | 7B | 240 | down | 72% | -23% |
-| SmolVLM | 2B | 175 | right | 87% | -44% |
-| Qwen3-VL 4B | 4B | 120 | left | 97% | -61% |
-| LLaVA 1.6 7B | 7B | 28 | — | — | -91% |
+| Model | Size | Avg Score | Avg Turns | Latency/move | Top Direction | % Spam | vs Random |
+|-------|------|-----------|-----------|-------------|--------------|--------|-----------|
+| **Pixtral 12B** | 12B | **535** | 30 | 14.4s | down | 36% | +73% |
+| **Qwen2.5-VL 3B** | 3B | **411** | 23 | 3.3s | right | 34% | +33% |
+| Random Baseline | — | **310** | 14 | — | — | — | — |
+| Moondream2 | 1.9B | 268 | 14 | 3.1s | up | 86% | -14% |
+| Qwen2.5-VL 7B | 7B | 240 | 28 | 3.9s | down | 72% | -23% |
+| SmolVLM | 2B | 175 | 27 | 10.2s | right | 87% | -44% |
+| Qwen3-VL 4B | 4B | 120 | 22 | 2.6s | left | 97% | -61% |
+| LLaVA 1.6 7B | 7B | 28 | — | — | — | — | -91% |
 
-Moondream2's consistent 290 scores *look* like skill — but going "up" from the start position just happens to collect a fixed set of pellets before hitting a wall. Every game plays out almost identically. The model isn't navigating; it's accidentally replaying the same path.
+Moondream2's scores cluster around 290 in most runs — which *looks* like skill, but going "up" from the start position just happens to collect a fixed set of pellets before hitting a wall. Every game plays out almost identically. The model isn't navigating; it's accidentally replaying the same path.
 
 Because the maze is larger than the screen and scrolls as Pac-Man moves, a model that spams one direction can actually travel quite far before hitting a dead end — and along the way, it eats 10–20 pellets purely by accident. That's why even the worst spammers don't score zero.
+
+The turns column tells its own story. SmolVLM and Qwen2.5-VL 7B survive 27–28 turns despite low scores — they're alive but not collecting pellets, suggesting they're trying directions but bouncing off walls. Moondream2 and the random baseline both die in ~14 turns, but Moondream2 scores nearly as much by spamming "up" as random does by varying directions — a reminder that survival time and score don't always correlate.
 
 ---
 
 ## Why the Models Break
 
-The root cause was our prompt's last line: `MOVE: <direction>`. For instruction-tuned models, this looks like a fill-in-the-blank template. They complete it with a single token and stop — no reasoning, no image analysis.
+A major contributor to the direction-spam pattern was our prompt's last line: `MOVE: <direction>`. For instruction-tuned models, this looks like a fill-in-the-blank template. They complete it with a single token and stop — no reasoning, no image analysis.
 
-**The Qwen3-VL think tag:** Qwen3-VL scored exactly 120 in all 5 games, 97% "left." But when asked to simply *describe* the same screenshot, it produced 2,000+ characters of accurate game analysis. The vision encoder worked fine.
+**The Qwen3-VL think tag:** Qwen3-VL scored exactly 120 in every run, 97% "left." But when asked to simply *describe* the same screenshot, it produced 2,000+ characters of accurate game analysis. The vision encoder worked fine.
 
-The issue is specific to the Qwen3 architecture: these models have special `<think>` and `</think>` tokens that gate their reasoning mode. Without an explicit `<think>` prefix, the model's generation terminates after one token for short-answer prompts. Our `MOVE: <direction>` template hit this exactly — the model filled in one word and stopped.
+In our mlx-vlm setup, Qwen3-VL's generation terminated after one token for short-answer prompts. Qwen3 models have special `<think>` and `</think>` tokens that gate their reasoning mode, and without an explicit `<think>` prefix, the `MOVE: <direction>` template triggered single-token completion — the model filled in one word and stopped.
 
 We confirmed it by prepending `<think>\n` to force reasoning. The model produced 600+ characters of spatial analysis and picked varied directions — but at 30–50 seconds per turn, looping into "Wait — let me look again" spirals. The reasoning was there; the prompt just wasn't triggering it. This is a gotcha worth knowing about for anyone using Qwen3 models locally: if you're getting suspiciously short answers, the think tag might be the issue.
 
 **The 3B beats 7B paradox:** Same model family, same prompt, same screenshot — yet the 3B produces 623 characters of step-by-step reasoning while the 7B outputs just "The direction that has pellets and no ghosts is **down**." (57 characters). The 7B's instruction-following is *too efficient*. It recognizes the short-answer format and skips thinking entirely. The 3B's less polished tuning is an advantage — it over-explains, which forces it to actually analyze the screenshot.
 
-**Bigger, better-tuned models are MORE susceptible** to this pattern. They're better at recognizing short-answer formats, so they skip straight to the answer. Instruction-following quality can be inversely correlated with task performance.
+**In this setup, bigger and better-tuned models were more susceptible** to this pattern. They're better at recognizing short-answer formats, so they skip straight to the answer. At least for this kind of task, instruction-following quality can work against performance.
 
 ---
 
 ## Fixing It: From `MOVE:` to `GO:`
 
-Once we understood that the prompt structure was the problem — not the models' vision capabilities — we started iterating. Our first fix (v4) was simple: add "say why in one sentence" before `MOVE: direction`. This helped in isolated tests — Qwen3-VL and the 7B both started producing varied, reasoned responses on individual screenshots. But in full games, Qwen3-VL still only averaged 144 points. One sentence of reasoning wasn't enough to consistently break the directional bias turn after turn. The model would reason "there are pellets to the left" and then output "left" ten turns in a row regardless.
+Once we understood that prompt structure was a major contributor to the direction spam — alongside wall perception and other factors — we started iterating. Our first fix (v4) was simple: add "say why in one sentence" before `MOVE: direction`. This helped in isolated tests — Qwen3-VL and the 7B both started producing varied, reasoned responses on individual screenshots. But in full games, Qwen3-VL still only averaged 144 points. One sentence of reasoning wasn't enough to consistently break the directional bias turn after turn. The model would reason "there are pellets to the left" and then output "left" ten turns in a row regardless.
 
-The breakthrough came with a different approach — **structured chain-of-thought.** Instead of asking the model to think *then* answer, we asked explicit questions that force it to look at specific parts of the screenshot:
+The breakthrough came with a different approach — **a structured prompt** that asks the model to identify positions, hazards, and pellet directions before choosing a move:
 
 ```
 This is a Pac-Man game. Yellow=Pac-Man, magenta=walls, white dots=pellets.
@@ -168,61 +170,52 @@ Pixtral's approach works well with free-form prompts — it's thorough and varie
 
 The structured prompt lifted 4 of 7 models — but hurt 3.
 
-| Model | Free-form Avg | Structured Avg | Change |
-|-------|---------------|----------------|--------|
-| **Qwen2.5-VL 3B** | 411 | **516** | **+26%** |
-| **Qwen3-VL 4B** | 120 | **260** | **+117%** |
-| **Gemma 3 4B** | 120 | **248** | **+107%** |
-| **SmolVLM** | 175 | **240** | **+37%** |
-| Pixtral 12B | 535 | 320 | -40% |
-| Qwen2.5-VL 7B | 240 | 160 | -33% |
-| Moondream2 | 268 | 120 | -55% |
+| Model | Free-form Avg (turns) | Structured Avg (turns) | Change |
+|-------|----------------------|------------------------|--------|
+| **Qwen2.5-VL 3B** | 411 (23) | **516** (32) | **+26%** |
+| **Qwen3-VL 4B** | 120 (22) | **260** (20) | **+117%** |
+| **Gemma 3 4B** | 120 (22) | **248** (19) | **+107%** |
+| **SmolVLM** | 175 (27) | **240** (29) | **+37%** |
+| Pixtral 12B | 535 (30) | 320 (26) | -40% |
+| Qwen2.5-VL 7B | 240 (28) | 160 (19) | -33% |
+| Moondream2 | 268 (14) | 120 (29) | -55% |
 
-Pixtral — the free-form champion — bloats the structured format into markdown reports with headers, hitting the token limit before reaching `GO:`. Moondream2, the smallest model, parrots the template back without filling it in.
+Pixtral — the free-form champion — bloats the structured format into markdown reports with headers, hitting the token limit before reaching `GO:`. Moondream2 is the most counterintuitive: with the structured prompt it survives much longer (14→29 turns) but scores *less* (268→120). It's alive longer but completely lost — the template broke its accidental "spam up and collect pellets" strategy without replacing it with real navigation.
 
 **There is no universal prompt.** What fixes broken models constrains good ones. The ideal approach would be per-model prompt selection: free-form for natural reasoners, structured for models that need guidance.
 
 **Overall champion: Qwen2.5-VL 3B on the structured prompt** — 516 avg, 3.3 seconds per move, beats the random baseline by 66%. A 3-billion-parameter model running on a MacBook, outperforming a 12B model at 4x the speed. The structured prompt didn't constrain its natural reasoning — it focused it.
 
-One more surprise from the data: **speed doesn't predict quality.** Pixtral 12B takes 14.4 seconds per move. Qwen2.5-VL 3B takes 3.3 seconds. They trade the top spot depending on the prompt version. The fastest model in the benchmark (Qwen3-VL at 2.6 seconds per move) scores the lowest on the free-form prompt. Inference latency tells you nothing about game-playing ability.
+One more surprise from the data: **speed doesn't predict quality.** Pixtral 12B takes 14.4 seconds per move. Qwen2.5-VL 3B takes 3.3 seconds. They trade the top spot depending on the prompt version. The fastest model in the benchmark (Qwen3-VL at 2.6 seconds per move) scores the lowest on the free-form prompt. Inference latency didn't predict performance in this benchmark.
 
 ---
 
 ## Enter Claude Opus
 
-After benchmarking the local models, we wanted to know: what can a frontier model do with the same setup? Claude Opus 4.6 is orders of magnitude larger and more capable than the local models — but it's playing the exact same game. Same raw screenshots, same structured prompt, same 45-frame moves. The only difference is the brain behind the eyes.
-
-We played 4 games.
+After benchmarking the local models, we wanted to know: what can a frontier model do with the same setup? We played 5 runs with Claude Opus 4.6. Opus received the same raw PNG screenshots, the same structured v5 prompt, and the same 45-frame moves. The difference from local models: Opus runs remotely via API rather than on-device.
 
 | Game | Score | What Happened |
 |------|-------|---------------|
-| 1 | **930** |  Wall-junction stall |
+| 1 | **930** | Ghost caught at wall-junction stall |
 | 2 | 490 | Ghost caught during navigation |
-| 3 | 460 | Ghost caught during navigation , Wall-junction stall|
+| 3 | 460 | Ghost caught at wall-junction stall |
 | 4 | 540 | Ghost caught during navigation |
-| **Avg** | **605** | Every game cleared level 1. Every death on level 2 |
+| 5 | 380 | Ghost caught wall-junction stall |
+| **Avg** | **560** | Every game cleared level 1. Every death on level 2 |
 
-**605 average — 17% above the best local model (Qwen2.5-VL 3B at 516), and 95% above the random baseline.** The gap between Opus and the local models isn't just quantitative — it's qualitative. Opus genuinely reasons about the game state. With even a small amount of prompt tuning or wall-hit feedback, it could likely score much higher. Every single game cleared level 1. Every death happened on level 2. That level 1/level 2 split is consistent and telling — it suggests Opus hits a ceiling when the maze gets harder (fewer remaining pellets as breadcrumbs, ghosts are faster, layout changes).
+**560 average — above the best local model (Qwen2.5-VL 3B at 516), and well above the random baseline.** The gap between Opus and the local models isn't just quantitative — it's qualitative. Opus genuinely reasons about the game state. With even a small amount of prompt tuning or wall-hit feedback and past moves and trials, it could score much higher.
 
-Opus is the only model that attempts systematic maze navigation — sweeping corridors, reversing away from ghosts toward uncleared areas, and even chasing edible blue ghosts for bonus points. Local models never demonstrated any of these behaviors.
+Pixtral and Qwen 3B also reason about the game — they vary directions, analyze each option, and respond to game state. But Opus takes it further: systematic corridor-sweeping, reversing away from ghosts toward uncleared areas, and chasing edible blue ghosts for bonus points. The local models play reactively; Opus plays with something closer to a plan.
 
 [VIDEO: Claude Opus playing Ms. Pac-Man — showing corridor-sweeping strategy and ghost avoidance.]
 
-### How It Dies
+### The Failure Pattern
 
-But Opus dies too — and always the same way.
+Opus still dies — and most of the time in the same way. It reaches a junction, picks a direction based on where it sees pellets, and hits a wall. The score doesn't change. There's no "you hit a wall" feedback — the only signal is an unchanged score across two nearly identical screenshots. It tries adjacent directions, often also walls. 3–5 turns wasted, and since each move advances 0.75 seconds of in-game time, that's enough for ghosts to close in.
 
-[IMAGE: Screenshot of Pac-Man stuck at a wall junction, with ghosts approaching. The kind of T-junction where open corridors and walls are nearly indistinguishable at SNES resolution.]
+[IMAGE: Screenshot of Pac-Man stuck at a wall junction, with ghosts approaching. All models fail to find a way out fast from a corner.]
 
-It clears a corridor and reaches a junction where multiple paths meet. It picks a direction based on where it sees pellets — and hits a wall. The score doesn't change. The screenshot barely changes. There's no explicit "you hit a wall" feedback — the only signal is an unchanged score, which the model has to infer from comparing two nearly identical screenshots.
-
-So it tries adjacent directions. Often also walls.
-
-3–5 turns are wasted. Each turn is 0.75 seconds of real game time. Ghosts cross half the maze in 3–4 seconds.
-
-They arrive. Game over.
-
-This pattern accounted for nearly every death across all 4 games. **Opus doesn't die because it can't handle ghosts — its ghost avoidance is excellent. It dies because it can't read walls.**
+This accounted for nearly every death across all runs. **In these runs, wall and junction navigation appeared to be Opus's main failure mode — not ghost avoidance.**
 
 ---
 
@@ -234,40 +227,48 @@ Wall perception isn't just an Opus problem — it affects every model in the ben
 
 **Cleared corridors become invisible.** This is the cruelest part. Once pellets are eaten, an open corridor is just black space — visually identical to the black space behind walls. The pellets were serving as breadcrumbs, marking which paths are traversable. As any model clears more of the maze, navigation gets progressively *harder*. This is why every Opus game died on level 2 — by then, most breadcrumbs are gone.
 
-**No memory between turns.** Each turn is a fresh screenshot with no history. No model can remember which direction it tried last turn, so none can systematically eliminate blocked paths. A human stuck at a junction tries one direction, finds it blocked, and immediately tries another. Every model has to re-derive the maze from pixels every single time.
+**No memory between turns.** Each turn is a fresh screenshot with no history. No model can remember which direction it tried last turn, so none can systematically eliminate blocked paths. A human stuck at a junction tries one direction, finds it blocked, and immediately tries another. Every model has to re-derive the maze from pixels every single time. Why not append previous moves as a running log in the prompt? We tried — most models got confused by the extra context and played worse, not better. These small VLMs struggle enough with a single screenshot; adding a text history on top just gave them more to misinterpret.
 
 **Ms. Pac-Man's maze design makes it worse.** Unlike the original Pac-Man, which has one fixed maze, Ms. Pac-Man rotates between different layouts. No model can memorize a map. And the maze is larger than the screen — the view scrolls — so every model is always making local decisions from a partial view.
 
-The difference between models is how this wall problem manifests. Direction spammers hit a wall and die without noticing. Qwen 3B occasionally navigates around walls but inconsistently. Opus has the game understanding to navigate intentionally — ghost avoidance, corridor-sweeping, power pellet exploitation — but that same intentionality means the wall problem is what kills it. It's the only model good enough for walls to be the *limiting factor*.
+The difference between models is how this wall problem manifests. Direction spammers hit a wall and die without noticing. Qwen 3B occasionally navigates around walls but inconsistently. Opus handles it much better than the small models — but it still gets stuck, and when it does, the wasted turns are fatal.
+
+### Is This a Vision Problem or a Reasoning Problem?
+
+An interesting open question: when a model walks into a wall, is it failing to *see* the wall (visual acuity) or failing to *reason* about the maze (spatial reasoning)? At 256×224 with 1–2 pixel differences between wall and corridor, the information is barely in the pixels — so maybe it's just illegible. But a human playing at the same resolution doesn't get stuck, because they compensate with memory, feedback, and progressive map-building.
+
+The honest answer is we don't know yet. Every model fails at walls and corners, from the smallest to the largest. One way to test this: preprocess screenshots to explicitly mark open directions and walls, removing the perceptual ambiguity entirely. If models still fail, it's reasoning. If they improve, it was perception. That experiment is next.
 
 ---
 
 ## What We Learned
 
-**Most VLMs can't do spatial reasoning from game screenshots.** They can describe what they see — colors, shapes, general layout — but can't reliably extract spatial relationships: what's adjacent to what, which directions are open, where the nearest ghost is relative to Pac-Man. Understanding an image is not the same as reasoning about it. This distinction matters beyond games — it shows up anywhere a model needs to make decisions based on spatial relationships in an image.
+**In this setup, most small local VLMs couldn't turn screenshots into reliable moves.** The models we tested can describe what they see — colors, shapes, general layout — but struggled to extract the spatial relationships needed for gameplay: what's adjacent to what, which directions are open, where the nearest ghost is. Understanding an image is not the same as acting on it.
 
-**Bigger isn't always better.** The 3B model beats its 7B sibling because better instruction-following causes the 7B to skip reasoning. For tasks that need thinking before answering, over-explaining beats jumping to conclusions.
+**Bigger isn't always better.** The 3B model outperformed its 7B sibling. One possible explanation: the 7B's more polished instruction-following causes it to skip reasoning on short-answer prompts, while the 3B over-explains — which forces it to actually analyze the screenshot.
 
-**Prompt structure matters more than model size.** A 3B model with the right prompt beats a 12B with the wrong one. Prompt engineering moved the needle more than scaling up parameters.
+**Prompt structure matters more than model size.** Qwen2.5-VL 3B on the structured prompt (516) beat Pixtral 12B on the same prompt (320) at 4x the speed. Pixtral's best result (535) came with the free-form prompt, where it could reason in its own style. The right prompt for the right model moved the needle more than scaling up parameters.
 
 **Fill-in-the-blank templates are a trap.** If your prompt ends with `ANSWER: <value>`, instruction-tuned models will complete it in one token and skip all reasoning. This probably affects VLM applications well beyond games — any time you ask a vision model to classify, label, or choose from options, a template ending can short-circuit the analysis you actually need.
 
-**Local and frontier models hit different ceilings.** Local models can't reason about what they see — they fail at the "what should I do" step. Opus can reason brilliantly but can't always see clearly enough — it fails at the "what am I looking at" step. Different failure modes at different scales, same outcome: Pac-Man walks into a wall.
+**Local and frontier models hit different ceilings.** Local models were less reliable at turning observations into effective moves — even when they could describe the screenshot accurately. Opus reasons effectively but struggles with wall and junction navigation — whether that's perception, reasoning, or both remains an open question. Different failure modes at different scales, same outcome: Pac-Man walks into a wall.
 
-**AI is nowhere near human performance at this.** Our best score across 200+ games is 930 points. Decent human players routinely clear 10,000+. Remember: the AI has *unlimited thinking time* — the game is literally frozen while it decides — and it still can't navigate a maze that a human clears in minutes while multitasking. The gap isn't close.
+**This is a test of single-frame visual decision-making, not general game-playing ability.** Our top score across runs is 930 points. With no memory, no feedback, and no context beyond a single screenshot, even the strongest model can't navigate reliably. The setup is deliberately constrained — it isolates how well a model can read and act on a single image, which is the question we wanted to answer.
 
 ---
 
 ## What's Next
 
-The obvious follow-up: what if we preprocess the screenshots to explicitly mark which directions are open and which are walls? We have an OpenCV pipeline that does exactly this — detecting walls and corridors by color, then rendering them as clean arrows and X marks. Opus's failure mode is specifically wall perception, so this could change the game dramatically. That experiment is coming in a separate article.
+The obvious follow-up: what if we preprocess the screenshots to explicitly mark which directions are open and which are walls? We have an OpenCV pipeline that does exactly this — detecting walls and corridors by color, then rendering them as clean arrows and X marks. Opus's main failure mode is wall and junction navigation — if that's a perception issue, cleaner inputs could help significantly. That experiment is coming in a separate article.
 
 Other ideas we want to try: wall-hit feedback ("score unchanged — you probably hit a wall, try another direction"), multi-frame context so the model can track ghost trajectories across turns, and testing whether a few in-context examples of good play can teach small models to navigate.
 
-But the most interesting takeaway from this experiment is broader than any specific fix. A vision model's ability to play a 1990s arcade game — frozen between moves, with unlimited thinking time — tells you something real about spatial reasoning. That capability matters for robotics, autonomous navigation, medical imaging, and any other domain where AI needs to look at an image and make a decision about *space.* Most current VLMs can't do it, even for a game designed for a 16-bit console in 1993. The ones that can are expensive. And even the best ones walk into walls.
+It's worth noting what this benchmark deliberately doesn't test: if you gave a frontier model like Opus persistent context across turns, wall-hit feedback, and basic game state tracking, we'd expect performance to improve dramatically. Opus already demonstrates strategy, ghost avoidance, and power pellet exploitation — its main failures appear to be wall navigation and lack of memory across turns. How close it could get to human-level play is an open question, but the gap would likely narrow fast. The point of our setup was to test raw single-frame visual decision-making, which is the harder and more revealing question.
 
-There's something delightful about watching a state-of-the-art AI model squint at a Pac-Man screenshot, think for three seconds, and confidently walk straight into a wall. It's a good reminder that these models are impressive *and* limited — often in the same turn.
+But the most interesting takeaway is broader than any specific fix. A simple arcade game turns out to be a surprisingly revealing test of single-frame visual decision-making. It exposes how brittle screenshot-based control can be — prompt sensitivity, direction spam, the gap between describing an image and acting on it. Prompt structure can help, but it doesn't solve perception, memory, or control. And even a frontier model, with all its reasoning power, hits a perceptual wall (literally) when working from raw low-resolution pixels.
+
+There's something delightful about watching an AI model squint at a Pac-Man screenshot, think for three seconds, and confidently walk straight into a wall. It's a good reminder that even impressive models have real limits — and that a 1993 arcade game is still a surprisingly hard benchmark.
 
 ---
 
-*All experiments ran on a 16GB Apple Silicon Mac using [mlx-vlm](https://github.com/Blaizzy/mlx-vlm) for local models. Claude Opus games were played through [Claude Code](https://claude.com/claude-code). The emulator is [Mesen](https://www.mesen.ca/). All code, prompts, Lua scripts, and run data are on [GitHub](https://github.com/grstathis/can-llms-play-pacman).*
+*All experiments ran on an M1 MacBook Pro (16GB) using [mlx-vlm](https://github.com/Blaizzy/mlx-vlm) for local models. Claude Opus games used the Anthropic API. The emulator is [Mesen](https://www.mesen.ca/). All code, prompts, Lua scripts, and run data are on [GitHub](https://github.com/grstathis/can-llms-play-pacman).*
