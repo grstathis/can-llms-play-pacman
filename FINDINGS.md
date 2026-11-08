@@ -6,12 +6,25 @@ We built a pipeline that lets local vision language models play Ms. Pac-Man on a
 
 **Pipeline:** Lua script freezes emulator → raw screenshot captured → VLM receives image + prompt → outputs direction → emulator plays 45 frames (~0.75s of gameplay) → repeat.
 
-**Prompt (v3, final):**
+**Prompt (v3, initial benchmark):**
 ```
 This is a Pac-Man game screenshot. Pac-Man is yellow. Walls are magenta and they block Pac-man.
 Pellets are white/grey dots. Ghosts are colored blobs with eyes.
 Which direction (left, right, up, down) has pellets and no ghosts?
 MOVE: <direction>
+```
+
+**Prompt (v5, structured CoT — used for later evals and Claude Opus runs):**
+```
+This is a Pac-Man game. Yellow=Pac-Man, magenta=walls, white dots=pellets.
+Ghosts: red, pink, orange, cyan blobs with eyes — avoid them.
+Exception: blue/white ghosts are EDIBLE — chase them for bonus points!
+Answer briefly:
+PACMAN: <position>
+GHOSTS: <color and position of each ghost>
+PELLETS: <which directions have pellets>
+DANGER: <which directions have normal ghosts>
+GO: <one non-diagonal direction>
 ```
 
 **Methodology:** Each model plays multiple games from the same save state. A game ends on first life lost. The random baseline picks a uniform random direction each turn (no LLM). All VLM runs use raw screenshots (no OpenCV preprocessing) and the same prompt.
@@ -248,11 +261,64 @@ The ideal approach is likely **per-model prompt selection**: use v3 (free-form) 
 
 ---
 
+## Key Finding 8: Claude Opus 4.6 — Frontier Model Beats Local VLMs but Hits the Same Wall
+
+We played 4 games with Claude Opus 4.6 (via Claude Code) using the same raw prompt (v5) and pipeline as the local models. Opus reads each screenshot, reasons about the game state in the structured PACMAN/GHOSTS/PELLETS/DANGER/GO format, and types a direction.
+
+### Results:
+
+| Game | Score | Level | Death |
+|------|-------|-------|-------|
+| 1 | 930 | Cleared L1, died L2 | Stuck at wall junction, ghost caught up |
+| 2 | 490 | Cleared L1, died L2 | Lost in cleared area, ghost caught up |
+| 3 | 460 | Cleared L1, died L2 | Ghost caught during navigation |
+| 4 | 540 | Cleared L1, died L2 | Stuck in cleared center, ghost caught up |
+| **Avg** | **605** | | |
+
+**605 avg — 17% above the best local model (Qwen2.5-VL 3B at 516), and 95% above random (310).** Every game cleared level 1. Every death happened on level 2.
+
+### The Wall-Junction Problem
+
+The most distinctive failure pattern: Opus repeatedly sends moves into walls, wasting 3-5 turns with zero score change while ghosts close in. This happened in every game, always in the same way:
+
+1. **Opus clears a corridor** and reaches a junction where multiple corridors meet.
+2. **It picks a direction based on where it sees pellets** — but from a 256×224 raw screenshot, it cannot reliably tell whether a given pixel gap is an open corridor or a 2-pixel-wide wall segment.
+3. **The move fails silently.** The score stays the same, the screenshot barely changes, and Opus has no explicit "you hit a wall" feedback — it only infers the failure from the unchanged score.
+4. **It tries adjacent directions**, often also hitting walls, because at a junction the open path may require a diagonal-looking move that doesn't map cleanly to up/down/left/right from the visual.
+5. **Ghosts arrive** during the wasted turns. A 3-5 turn stall at a junction is 3-5 seconds of real game time — enough for any ghost to cross half the maze.
+
+This pattern accounts for nearly every death across all 4 games. Opus's actual ghost avoidance is strong — it escaped a 3-ghost cluster in game 4, correctly identified edible blue ghosts in game 1, and consistently fled in the right direction when it could see ghosts. **The model dies not because it can't read ghosts, but because it can't read walls.**
+
+### Why raw screenshots make walls ambiguous
+
+The SNES renders the maze at 256×224. Wall segments and corridors are each 8 pixels wide — but after Mesen's screenshot compression and any display scaling, the boundary between "open corridor" and "thin wall" can be 1-2 pixels of color difference. Specific problems:
+
+- **T-junctions and corners** are the worst. At a T-junction, one direction is open and two are walls, but all three look like they might be corridors from a low-res top-down view. The model must distinguish a 4-pixel-wide black gap (open) from a 4-pixel-wide magenta strip (wall) at arbitrary positions in the image.
+- **Already-cleared corridors look like walls.** Once pellets are eaten, an open corridor is just black space — indistinguishable from the black space behind a wall. The model loses its "breadcrumb" signal for which paths are traversable.
+- **No position memory.** Each turn is a fresh screenshot with no history. Opus doesn't know which direction it tried last turn, so it can't systematically eliminate blocked paths. It has to re-derive the maze topology from pixels every single turn.
+
+### The schematic view was designed to solve exactly this
+
+The OpenCV preprocessing pipeline (`pacman_vision.py`) explicitly marks each direction as a green arrow (open) or red X (blocked), with pellet counts on each arrow. This eliminates wall ambiguity entirely — the model doesn't need to read pixel-level maze structure. However, we used the raw prompt for Opus to match the same conditions as the local model benchmark.
+
+### Comparison: Opus vs local models on the same problem
+
+The local VLMs have the same wall-reading problem but it manifests differently:
+- **Direction spammers** (SmolVLM, Qwen3-VL) never navigate at all — they pick one direction and repeat it. They don't get "stuck" at walls because they never try to navigate around them.
+- **Qwen2.5-VL 3B** (best local) occasionally navigates successfully, but its spatial reasoning is too weak to consistently find paths. It scores through lucky pellet collection, not intentional maze navigation.
+- **Opus** is the only model that clearly *attempts* systematic maze navigation — going right to clear a corridor, then down to sweep the bottom, then up to reach the top. When it works, it dramatically outscores the local models (930 in game 1). When it stalls at a junction, the wasted turns are fatal.
+
+**The wall-junction stall is Opus's ceiling on raw screenshots.** Its game understanding (ghost avoidance, power pellet exploitation, corridor-sweeping strategy) is far beyond any local model. The bottleneck is purely perceptual: distinguishing open corridors from walls at SNES resolution without explicit indicators.
+
+---
+
 ## Open Questions
 
 - **Per-model prompt routing:** Can we detect at runtime whether a model needs structured or free-form prompts?
 - **Adaptive token budget:** Give verbose models (Pixtral) 300+ tokens while keeping compact models at 100?
 - Could fine-tuning a small VLM on Pac-Man screenshots improve play beyond random?
-- How would cloud-hosted frontier models (Claude Opus, GPT-4o) perform with the same pipeline?
+- ~~How would cloud-hosted frontier models (Claude Opus, GPT-4o) perform with the same pipeline?~~ **Answered:** Opus scores 605 avg (17% above best local). Strategy is strong; wall perception is the bottleneck.
 - Would multi-frame context (showing the last N screenshots) help models track ghost trajectories?
 - Can models plan multi-step paths instead of single moves?
+- **Would the schematic view help Opus more than it helps local models?** The preprocessing hurt Qwen2.5-VL 3B (372 → 263), but Opus's failure mode is specifically wall ambiguity — the exact thing schematics solve. A schematic run could score dramatically higher.
+- **Would wall-hit feedback help?** If the pipeline told Opus "score unchanged, you hit a wall — try another direction," the junction stalls could drop from 3-5 turns to 1.

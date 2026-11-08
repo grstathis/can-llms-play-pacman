@@ -55,6 +55,41 @@ RUNS_DIR = LOCAL_OUTPUT / "runs"
 
 VALID_DIRECTIONS = ("up", "down", "left", "right")
 
+SCHEMATIC_PROMPT = """\
+This is a simplified map of the Ms. Pac-Man game.
+
+Legend:
+- Green circle labeled YOU = Pac-Man (you control her)
+- White dots = pellets (eat them for points)
+- Red circle labeled G = ghost (avoid — they kill you)
+- Green arrows with numbers = open directions (number = pellet count that way)
+- Red X = wall (blocked, cannot move there)
+
+Your task:
+1. Look at the arrows around YOU. Green arrows show open directions; red X means blocked.
+2. The number on each green arrow is how many pellets are in that direction — prefer higher numbers.
+3. If a ghost (red G) is nearby in a direction, avoid that direction.
+4. Pick the open direction with the most pellets and no nearby ghost.
+
+Answer in this format:
+OPEN: <list of open directions with pellet counts>
+BLOCKED: <list of blocked directions>
+DANGER: <direction of nearest ghost, or none>
+MOVE: <your chosen direction>
+"""
+
+RAW_PROMPT = """\
+This is a Pac-Man game. Yellow=Pac-Man, magenta=walls, white dots=pellets.
+Ghosts: red, pink, orange, cyan blobs with eyes — avoid them.
+Exception: blue/white ghosts are EDIBLE — chase them for bonus points!
+Answer briefly:
+PACMAN: <position>
+GHOSTS: <color and position of each ghost>
+PELLETS: <which directions have pellets>
+DANGER: <which directions have normal ghosts>
+GO: <one non-diagonal direction>
+"""
+
 LIVES_ADDR = 0x028C
 SCORE_ADDR = 0x02A2
 SCORE_BYTES = 3
@@ -180,6 +215,7 @@ def main():
     parser.add_argument("--player", default="claude-opus-4-0-20250115", help="Player label for logs")
     parser.add_argument("--no-launch", action="store_true", help="Skip launching Mesen (already running)")
     parser.add_argument("--preprocess", action="store_true", help="Also save schematic view")
+    parser.add_argument("--raw", action="store_true", help="Use raw screenshot prompt (skip schematic)")
     args = parser.parse_args()
 
     if not args.no_launch:
@@ -218,10 +254,13 @@ def main():
     print(f"\nPlayer: {args.player}")
     print(f"Run log: {log_path}")
     print("Game ready! Waiting for your moves.\n")
+    use_schematic = args.preprocess and not args.raw
+    game_prompt = SCHEMATIC_PROMPT if use_schematic else RAW_PROMPT
     print("Commands: up/down/left/right [frames]  |  quit")
     print(f"Screenshot at: {LOCAL_OUTPUT / 'screen.png'}")
-    if args.preprocess:
+    if use_schematic:
         print(f"Schematic at:  {LOCAL_OUTPUT / 'screen_schematic.png'}")
+    print(f"Prompt mode:   {'schematic' if use_schematic else 'raw'}")
     print("-" * 50)
 
     turn = 0
@@ -267,7 +306,8 @@ def main():
 
                 shutil.copy2(screen, run_dir / f"turn_{turn:03d}.png")
 
-                print(f"\n[Turn {turn}] screenshot saved — enter move:")
+                print(f"\n[Turn {turn}] screenshot saved — read it then answer:")
+                print(f"--- PROMPT ---\n{game_prompt}--- END PROMPT ---")
                 t_start = time.time()
 
                 try:
