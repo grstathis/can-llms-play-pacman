@@ -203,10 +203,10 @@ After benchmarking the local models, we wanted to know: what can a frontier mode
 | 2 | 490 | Ghost caught during navigation |
 | 3 | 460 | Ghost caught at wall-junction stall |
 | 4 | 540 | Ghost caught during navigation |
-| 5 | 380 | Ghost caught wall-junction stall |
-| **Avg** | **560** |  |
+| 5 | **1010** | Wall stall turns 20–31, broke free, second stall at turn 46 |
+| **Avg** | **686** |  |
 
-**560 average (range: 380–930) — in the same ballpark as the best local model (Qwen2.5-VL 3B at 516), and well above the random baseline.** With only 5 runs each and wide score variance, the averages are too close to claim a clear performance gap. The more interesting difference is qualitative: Opus appears to reason about the game state differently. With even a small amount of prompt tuning or wall-hit feedback and past moves, it could likely score much higher.
+**686 average (range: 460–1010) — above the best local model (Qwen2.5-VL 3B at 516), and well above the random baseline.** With only 5 runs each and wide score variance, the gap should be read with caution. The more interesting difference is qualitative: Opus appears to reason about the game state differently. With even a small amount of prompt tuning or wall-hit feedback and past moves, it could likely score much higher.
 
 Pixtral and Qwen 3B also reason about the game — they vary directions, analyze each option, and respond to game state. But Opus takes it further: systematic corridor-sweeping, reversing away from ghosts toward uncleared areas, and chasing edible blue ghosts for bonus points. The local models play reactively; Opus plays with something closer to a plan.
 
